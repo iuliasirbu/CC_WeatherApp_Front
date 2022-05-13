@@ -1,32 +1,30 @@
 import axios from "axios";
 import React from "react";
 
-
-
-function MessagesSubmit({weather}) {
+function MessagesSubmit({ weather }) {
     const handleMessageSend = async (e) => {
-    const senderName = document.getElementById('senderName').value;
-    const receiverMail = document.getElementById('receiverMail').value;
+        const senderName = document.getElementById('senderName').value;
+        const receiverMail = document.getElementById('receiverMail').value;
 
-    try{
-        const response = await axios.post(`${process.env.REACT_APP_API_URL}/messages/sendMail`, {
-            senderName,
-            receiverMail,
-            senderMail: 'iuliasirbu47@gmail.com',
-            messageContent: weather
-        })
+        try{
+            const response = await axios.post(`${process.env.REACT_APP_API_URL}/messages/sendMail`, {
+                senderName,
+                receiverMail,
+                senderMail: 'iuliasirbu47@gmail.com',
+                messageContent: weather
+            })
 
-        console.log(response)
+            console.log(response)
 
-        if(response){
-            alert(`\nMessage sent`);
+            if(response){
+                alert(`\nMessage sent`);
+            }
+
         }
-
+        catch(error){
+            console.log(error.response)
+        }
     }
-    catch(error){
-        console.log(error.response)
-    }
-}
 
     return (
         <div id="MessagesSubmit">
