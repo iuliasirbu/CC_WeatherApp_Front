@@ -28,7 +28,7 @@ function MessagesList(){
                         <li key = {message.entryID}>
                             <p>
                                 <span className="text-bold font-serif ">{message.senderName}</span>
-                                <span className="text-gray-600 font-serif ">{` sent a message to ${message.receiverMail}:${message.messageContent}`}</span>
+                                <span className="text-gray-600 font-serif ">{` sent a message to ${message.receiverMail}: ${message.messageContent}`}</span>
 
                             </p>
                         </li>
