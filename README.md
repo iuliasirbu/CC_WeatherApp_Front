@@ -1,70 +1,57 @@
-# Getting Started with Create React App
+# CC_WeatherApp
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Majoritatea site-urilor pe care un utilizator le accesează au la bază API-uri (Application Programming Interface). Acestea fac munca dezvoltatorilor mai ușoară, deoarece le oferă posibilitatea de a utiliza funcționalități deja existente, în schimbul unui abonament. API-urile pot avea diferite utilități, pornind de la machine learning, până la API-uri ce traduc texte în limbi regăsite în cărțile de ficțiune. 
 
-## Available Scripts
+În acest proiect am realizat o mini aplicație de vreme. Scopul aplicației este de a primi detalii privind descrierea stării vremii și temperatura actuală pentru un oraș și trimiterea acestor detalii pe mail, către un destinatar la alegere. 
 
-In the project directory, you can run:
+Pentru a accesa informațiile privind vremea, am folosit API-ul site-ului OpenWeatherMap (https://openweathermap.org/api). Astfel, atunci când trimitem un nume de oraș printr-un request, ni se va returna un JSON, unde avem detalii despre vremea în orașul respectiv, în momentul de față. Pentru a utiliza acest API, am generat un API key pe care l-am stocat în fișierul .env și pe care l-am introdus în url-ul request-ului.
 
-### `npm start`
+Pentru trimiterea mail-urilor am folosit API-ul SendGrid (https://sendgrid.com/). Am setat contul ce va trimite e-mail-urile cu adresa de e-mail personală, iar ceilalti parametrii din request vor fi numele expeditorului, adresa de e-mail a destinatarului și mesajul, ce constă într-un string concatenat folosind detalii preluate din raspunsul API-ului de vreme. Pentru autentificare, am generat un API key, stocat în fișierul .env, și a fost setat prin funcția setApiKey în fișierul ce conține funcțiile de trimitere e-mailuri.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+Am creat o bază de date pentru a stoca e-mail-urile trimise. În baza de date vom regăsi aceleași detalii ca cele din request-ul API-ului SendGrid:
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+![image](https://user-images.githubusercontent.com/83769025/168390219-a0b46b7b-430d-4467-913c-05c619e8c896.png)
 
-### `npm test`
+În cadrul aplicației, am folosit mai multe metode HTTP:
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+GetMessages - Returnarea e-mail-urilor din baza de date
 
-### `npm run build`
+![image](https://user-images.githubusercontent.com/83769025/168390650-e26ece45-7386-4d26-8c31-967892303b55.png)
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+GetWeather - Returnarea string-ului concatenat cu detalii privind vremea pentru un anumit oras
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+![image](https://user-images.githubusercontent.com/83769025/168390783-75b4ddfc-f5e5-49e2-9a08-4d9784ef1ff9.png)
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+SendMail - Introducerea unui e-mail în baza de date
 
-### `npm run eject`
+![image](https://user-images.githubusercontent.com/83769025/168391067-ec2f7a98-0726-4bc8-8a0f-355f23c266b8.png)
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+DeleteMessageById - Stergerea unui e-mail din baza de date
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+![image](https://user-images.githubusercontent.com/83769025/168391179-05f59f10-83a0-4016-9816-43cdd9d05479.png)
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+În interfața aplicației putem găsi 3 secțiuni: lista e-mail-urilor anterioare, selectarea unui oraș pentru a returna detalii despre vreme și form-ul pentru trimitere de e-mail-uri.
 
-## Learn More
+![image](https://user-images.githubusercontent.com/83769025/168391700-c228143d-83b4-4e8f-a0d2-3d58329b5da2.png)
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+După introducerea numelui unui oraș, la apăsarea butonului Search, ni se afișează string-ul concatenat:
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+![image](https://user-images.githubusercontent.com/83769025/168391875-355597f9-a109-4a6a-8738-23cf4f3fb94e.png)
 
-### Code Splitting
+La apăsarea butonului de trimitere e-mail, primim o alertă prin care ni se confirmă trimiterea acestuia:
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+![image](https://user-images.githubusercontent.com/83769025/168391999-8f688b6a-f0d7-4f9b-aa21-695d00ff43d4.png)
 
-### Analyzing the Bundle Size
+![image](https://user-images.githubusercontent.com/83769025/168392055-1674098b-6de9-4c5e-9da1-e5525fe1bb94.png)
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+La reîncarcarea paginii, lista cu mail-urile trimise va fi actualizată:
 
-### Making a Progressive Web App
+![image](https://user-images.githubusercontent.com/83769025/168392352-27bb39cd-1a5b-45fa-8676-02bddec3b21e.png)
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+Bibliografie:
+https://docs.sendgrid.com/api-reference/how-to-use-the-sendgrid-v3-api/authentication
+https://openweathermap.org/current#name
+Seminar Cloud Computing
 
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+Link video youtube: https://youtu.be/bTXaBwkaGco
